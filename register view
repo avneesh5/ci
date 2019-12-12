@@ -1,0 +1,121 @@
+
+
+
+
+
+
+
+<div class="container ">
+    <div class="row">
+    
+    <div class="col-md-12 text-center" >
+    <div style="margin-top:62px;text-align:center" class="text-primary">
+    <h2>Welcome to Student Registration Page</h2>
+    </div>
+        
+<?php 
+		if($this->session->tempdata("success"))
+		{
+			echo "<p class='alert alert-danger'>".$this->session->tempdata("success")."</p>";
+		}
+		
+	else
+		{
+			echo "<div class='alert alert-danger '>".validation_errors()."</div>";
+		}
+		?>
+        <?php echo form_open(); ?>
+           <table class="table" style="text-align:cwnter">
+        
+                <tr>
+                    <td>First Name<span style="color:red">  *</span></td>
+                
+                
+                  <td>  <input value="<?php echo set_value('fname'); ?>" type="text" id="fname" name="fname" class="form-control"  /><?php echo form_error('fname'); ?>
+                  </td>
+                </tr>
+                
+                        <tr>
+                        <td>Last Name <span style="color:red">  *</span></td>
+                    
+                        <td><input value="<?php echo set_value('lname'); ?>" type="text" id="lname" name="lname" class="form-control" /><?php echo form_error('lname'); ?>
+                    </td>
+                    </tr>
+                        <tr>
+                        <td>Email<span style="color:red">  *</span></td>
+                
+                        <td><input value="<?php echo set_value('email'); ?>" type="text" id="email" name="email" class="form-control" /><?php echo form_error('email'); ?>
+                </td>
+                </tr>
+                <tr>
+                            <td>Mobile<span style="color:red">  *</span></td>
+                 
+                     <td><input value="<?php echo set_value('mobile'); ?>" type="text" id="mobile" name="mobile" class="form-control" /><?php echo form_error('mobile'); ?>
+                </td>
+                </tr>
+                <tr>
+                    <td>Password <span style="color:red">  *</span></td>
+                
+                   <td> <input  type="password" name="pwd" id="pwd" class="form-control"><?php echo form_error('pwd'); ?>
+               </td>
+               </tr>
+               <tr>
+                        <td>Confirm Password<span style="color:red">  *</span> </td>
+                    
+                       <td> <input type="password" name="cpwd" id="cpwd" class="form-control"></td>
+                       </tr>
+                    <tr>
+                            <td>Courses<span style="color:red">  *</span> </td>
+                            <td>
+                            <select name="course"  class="form-control">
+                                <option value="">Select course</option>
+                                <option value="BCA"> BCA</option>
+                                <option value="BA"> BA</option>  
+                                <option value="BBA"> BBA</option>
+                                <option value="bcom">Bcom</option>
+                                <option value="bsc">BSC</option>
+                                <option value="btech">BTech</option> 
+                            </select>
+                        </td>
+                        </tr>
+                        <tr>
+                                <td>Semester<span style="color:red">  *</span> </td>
+                                <td>
+                            <select name="sem"  class="form-control">
+                                <option value="">Select Semester</option>
+                                    <option value="1st">1st Sem</option>
+                                    <option value="2nd">2nd Sem</option>  
+                                    <option value="3rd"> 3rd Sem</option>
+                                    <option value="4th">4th Sem</option>
+                                    <option value="5th">5th Sem</option>
+                                    <option value="6th">6th Sem</option>
+                                    <option value="7th">7th Sem</option>
+                                    <option value="8th">8th Sem</option> 
+                            </select>
+                        </td>
+                        </tr>
+                        <tr>
+                             <td>Gender<span style="color:red">  *</span></td>
+                        <td>
+                             <input type="radio" name="gender" value="male">Male
+                             <input type="radio" name="gender" value="female">Female<?php echo form_error('gender'); ?>
+                 </td>
+                 </tr>
+                 <tr>
+                 <td>
+                     <input type="checkbox" value="1" name="terms">
+                Please accept the Terms and Conditions
+            </td>
+            </tr>
+            <tr>
+            <td></td>
+             <td><input type="submit" value="Register" class="btn btn-success">
+             <a href="<?php echo base_url(); ?>slogin" input type="submit" value="Login" class="btn btn-primary">Login</a></td>
+             </tr>
+             </table>
+        <?php echo form_close(); ?>
+    </div>
+</div>
+           
+        </div>
+       
