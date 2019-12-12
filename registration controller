@@ -1,0 +1,63 @@
+<?php
+class Students extends CI_Controller
+{
+    public function index()
+    {
+
+        $this->load->view('header');
+        $this->load->view('sidebar');
+        //echo "welcome";
+        $this->load->database();
+        $this->load->model('students_model');
+        $this->load->helper('form');
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('fname','First Name','required|min_length[4]');
+        $this->form_validation->set_rules('lname','Last Name','required|min_length[4]');
+        $this->form_validation->set_rules('email','Email','required|valid_email');
+        $this->form_validation->set_rules('mobile','Mobile','required|exact_length[10]');
+        $this->form_validation->set_rules('pwd','Password','required|min_length[4]');
+        $this->form_validation->set_rules('cpwd','Confirm Password','required|matches[pwd]');
+        $this->form_validation->set_rules('course','Courses','required');
+        $this->form_validation->set_rules('sem','Semester','required');
+        $this->form_validation->set_rules('gender','Gender','required');
+        $this->form_validation->set_rules('terms','T&C','required');
+        if($this->form_validation->run()==true)
+        {
+            $fname=$this->security->xss_clean($this->input->post('fname'));
+            $lname=$this->security->xss_clean($this->input->post('lname'));
+            $mail=$this->security->xss_clean($this->input->post('email'));
+            $mob=$this->security->xss_clean($this->input->post('mobile'));
+            $pwd=$this->security->xss_clean($this->input->post('pwd'));
+            $pwd=password_hash($pwd,PASSWORD_DEFAULT);
+            $course=$this->security->xss_clean($this->input->post('course'));
+            $sem=$this->security->xss_clean($this->input->post('sem'));
+            $gender=$this->security->xss_clean($this->input->post('gender'));
+            $terms=$this->security->xss_clean($this->input->post('terms'));
+            $ip=$_SERVER['REMOTE_ADDR'];
+            $uniid=md5(str_shuffle($fname.$gender.$lname.time()));
+          //echo $fname,$lname,$mail,$mob,$pwd,$course,$sem,$gender,$terms; 
+            $status=$this->students_model->savedata($fname,$lname,$mail,$mob,$pwd,$course,$sem,$gender,$terms,$ip,$uniid);
+        
+            if($status==true)
+            {
+                $this->session->set_tempdata("success","Student Registration Successfully",2);
+				redirect(current_url());
+			
+            }
+        
+            else{
+                $this->session->set_tempdata("error","Sorry!unable to register",2);
+                redirect(current_url());
+    
+            }   
+        }
+       
+        else
+        {
+    $this->load->view('students_view');
+
+    }
+    $this->load->view('footer');
+}
+}
+?>
