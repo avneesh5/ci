@@ -1,0 +1,79 @@
+<?php 
+class Home_model extends CI_Model
+{
+	public function getLoggedinUserData($uniid)
+	{
+		$result = $this->db->query("select *from students where uniid='$uniid'");
+		if($result->num_rows()==1)
+		{
+			return $result->row();
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function updateProfile($uname,$uniid)
+	{
+		$this->db->query("update students set username='$uname' where uniid='$uniid'");
+		if($this->db->affected_rows()>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function updatePassword($npwd,$uniid)
+	{
+		$this->db->query("update students set password='$npwd' where uniid='$uniid'");
+		if($this->db->affected_rows()>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+	public function updateAvatar($uniid,$filename)
+	{
+		$this->db->query("update students set avatar='$filename' where uniid='$uniid'");
+		if($this->db->affected_rows()>0)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	public function testing()
+	{
+		$data = array(
+
+			'name'=> $this->input->post('name'),
+			'comment'=> $this->input->post('comment')
+		);
+			$sql = $this->db->insert('student',$data);
+			  $id = $this->db->insert_id();
+			  return $data['id'];
+	}
+	public function get_testing($id)
+	{
+		$result = $this->db->query("select *from students where id='$id'");
+		if($result->num_rows()==1)
+		{
+			return $result->row();
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+}
+
+?>
