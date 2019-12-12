@@ -1,0 +1,56 @@
+<?php
+class Slogin extends CI_Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+        $this->load->database();
+        $this->load->helper('form');
+        $this->load->helper('url');
+        $this->load->library('form_validation'); 
+        
+        $this->load->library('session');
+        $this->load->model('slogin_model');
+
+    }
+    public function index()
+    {
+        //echo "welcome to student login page";
+        
+        $this->load->view('header');
+        $this->load->view('sidebar');
+        $this->form_validation->set_rules('email','Email','required');
+        $this->form_validation->set_rules('pwd','Password','required');
+    if($this->form_validation->run()==true)
+    {
+        //collect the form data and filter it
+      $email=$this->security->xss_clean($this->input->post('email'));
+      $pwd=$this->security->xss_clean($this->input->post('pwd'));
+      
+      $data = $this->slogin_model->verifyEmail($email);
+      if(!empty($data))
+      {
+          if(password_verify($pwd,$data->password))
+          {
+              $this->session->set_userdata("loginID",$data->uniid);
+              redirect(base_url()."home");
+          }
+          else
+          {
+              $this->session->set_tempdata("error","Sorry! wrong password entered for the email",2);
+              redirect(current_url());
+          }
+          
+          
+      }
+      else
+      {
+          $this->session->set_tempdata("error","Sorry! Email does not exists",2);
+          redirect(current_url());
+      }
+  }
+  else
+  {
+      $this->load->view("slogin_view");
+  }
+  $this->load->view("footer");
