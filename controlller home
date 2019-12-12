@@ -1,0 +1,31 @@
+<?php 
+class Home extends CI_Controller
+{
+	public function __construct()
+	{
+		parent::__construct();
+		$this->load->helper('form');
+		$this->load->helper("url");
+		$this->load->database();
+		$this->load->library('form_validation');
+		$this->load->model("home_model");
+		if(!$this->session->has_userdata("loginID"))
+		{
+			redirect(base_url()."login");
+		}
+	}
+	public function index()
+	{
+		$this->load->view("header");
+		$this->load->view("sidebar");
+		$uniid = $this->session->userdata("loginID");
+		$data['user']=$this->home_model->getLoggedinUserData($uniid);
+		$this->load->view("home_view",$data);
+		$this->load->view("footer");
+		
+	}
+	public function logout()
+	{
+		$this->session->unset_userdata("loginID");
+		redirect(base_url()."slogin");
+	}
