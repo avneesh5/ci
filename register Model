@@ -1,0 +1,22 @@
+<?php
+class students_model extends CI_Model
+{
+    public function savedata($fname,$lname,$mail,$mob,$pwd,$course,$sem,$gender,$terms,$ip,$uniid)
+    {
+        $this->db->query("insert into students values('','$fname','$lname','$mail','$mob','$pwd','$course','$sem','$gender','$terms',now(),'$ip','inactive','$uniid')");
+        if($this->db->affected_rows()>0)
+        {
+            return true;
+
+        }
+        else
+        {
+            return false;
+
+        }
+    }
+}
+
+
+
+?>
